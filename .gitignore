@@ -2,4 +2,5 @@
 Lib
 Scripts
 pyvenv.cfg
-**/.env
+message_board/.env
+*.env
