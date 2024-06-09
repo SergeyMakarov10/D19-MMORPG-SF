@@ -20,7 +20,6 @@ class PostForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
-    #description = forms.CharField(min_length=20)
 
     class Meta:
         model = Comment

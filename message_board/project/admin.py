@@ -10,8 +10,10 @@ class PostAdminForm(forms.ModelForm):
         model = Post
         fields = '__all__'
 
+
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
+
 
 admin.site.register(User)
 admin.site.register(Post, PostAdmin)

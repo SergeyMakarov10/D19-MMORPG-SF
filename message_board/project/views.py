@@ -4,16 +4,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
-
-
 from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 from .filters import PostFilter, PersonFilter
 from .forms import PostForm, CommentForm
 from django.urls import reverse_lazy
-
 
 
 class PostList(LoginRequiredMixin, ListView):
@@ -34,6 +30,7 @@ class PostList(LoginRequiredMixin, ListView):
         context['filterset'] = self.filterset
         return context
 
+
 class MyPostList(LoginRequiredMixin, ListView):
     model = Post
     ordering = '-post_created_at'
@@ -41,7 +38,6 @@ class MyPostList(LoginRequiredMixin, ListView):
     context_object_name = 'my_posts'
     queryset = Post.objects.all()
     paginate_by = 5
-
 
     def get_queryset(self):
 
@@ -55,11 +51,11 @@ class MyPostList(LoginRequiredMixin, ListView):
         return context
 
 
-
 class PostDetail(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'flatpages/post_id.html'
     context_object_name = 'post_id'
+
 
 class MyPostDetail(LoginRequiredMixin, DetailView):
     model = Post
@@ -92,12 +88,12 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
         # send_email_task.delay(post.pk)
         return super().form_valid(form)
 
+
 class PostDelete(LoginRequiredMixin, DeleteView):
     permission_required = ('post.delete_post',)
     model = Post
     template_name = 'flatpages/post_delete.html'
     success_url = reverse_lazy('post')
-
 
 
 class CommentCreate(LoginRequiredMixin, CreateView):
@@ -112,6 +108,7 @@ class CommentCreate(LoginRequiredMixin, CreateView):
         comment.comment_author = self.request.user
         comment.save()
         return super().form_valid(form)
+
 
 class HomePage(LoginRequiredMixin, TemplateView):
     template_name = 'flatpages/mainpost.html'
