@@ -9,7 +9,6 @@ from ckeditor.widgets import CKEditorWidget
 
 
 class PostForm(forms.ModelForm):
-    #description = forms.CharField(min_length=20)
 
     class Meta:
         model = Post
@@ -17,6 +16,7 @@ class PostForm(forms.ModelForm):
         widgets = {
             'text': CKEditorUploadingWidget(),  # поле для загрузки файлов при помощи ckeditor
         }
+    categories = forms.ModelChoiceField(queryset=Category.objects.all(), empty_label="Выберите категорию")
 
 
 class CommentForm(forms.ModelForm):
