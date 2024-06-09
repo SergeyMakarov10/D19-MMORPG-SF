@@ -1,0 +1,127 @@
+{% extends "flatpages/mainpost.html" %}
+<!DOCTYPE html>
+<html lang="en">
+{% block title %}
+{% endblock title %}
+
+<body><!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+   <h1  align="center" style="color:Gray; font-family: Trebuchet MS; font-size: 25px">Личный кабинет пользователя: {{ user.username }}</h1>
+   <h1  align="center" style="color:Gray; font-family: Trebuchet MS; font-size: 25px">Мои объявления</h1>
+
+   <button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'person_cabinet' %}">Отклики</a></button>
+   <button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'my_post' %}">Мои объявления</a></button>
+   <button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'post_create' %}">Создать объявление</a></button>
+   <button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'category_name' %}">Подписаться на категорию</a></button>
+   <div style="border: 2px solid #ccc; border-radius: 10px; padding: 15px; margin-bottom: 20px; background-color: #f8f9fa;">
+    <form action="" method="get">
+    {{ filterset.form.as_p }}
+
+        <input style="color:#292929; font-size: 12px;" type="submit" value="НАЙТИ"/>
+
+    </form>
+       <br>
+       <button> <a style="color:#292929; font-size: 12px;" href="{% url 'my_post' %}">Сбросить фильтр</a> </button>
+    </div>
+   <!-- Выводим товары, только если они есть с помощью тега if -->
+
+   {% if my_posts %}
+
+
+
+       <table>
+
+           <tr>
+
+               <td>Название</td>
+               <td>Объявление</td>
+               <td>Дата создания</td>
+               <td>Цена</td>
+               <td>Автор</td>
+               <td>Категория</td>
+               <td>Комметарий</td>
+               <td>Автор комментария</td>
+               <td>Дата комментария</td>
+
+           </tr>
+
+           {% for p in my_posts %}
+
+           <tr>
+
+               <td>
+                   <div style="border: 2px solid #ccc; border-radius: 10px; padding: 5px; margin-bottom: 10px; background-color: #f8f9fa;">
+                   <a style="color:#292929; font-size: 12px;" href="{% url 'my_post_detail' p.id  %}">{{ p.title }}</a>
+                       <div/>
+               </td>
+               <td>{{ p.content|truncatechars:300|safe }}</td>
+               <td>{{ p.post_created_at }}</td>
+
+                <td>{{ p.price }}</td>
+               <td>{{ p.post_author }}</td>
+               <td>{{ p.categories }}</td>
+
+
+               <td>{% for c in p.PostComment.all %}
+
+                   {{ c.content|truncatechars:150 }}
+
+                   {% endfor %}
+               </td>
+               <td>{% for c in p.PostComment.all %}
+
+                   {{ c.comment_author }}
+
+                   {% endfor %}
+               </td>
+               <td>{% for c in p.PostComment.all %}
+
+                   {{ c.comment_created_at }}
+
+                   {% endfor %}
+
+               </td>
+
+           </tr>
+
+
+           {% endfor %}
+
+
+       </table>
+
+<hr>
+   {% else %}
+       <!-- Если товаров нет, говорим, что товаров нет ;) -->
+       <h2>Объявлений нет!</h2>
+   {% endif %}
+
+
+
+
+{# Добавляем пагинацию на страницу #}
+
+   {# Информация о предыдущих страницах #}
+   {% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {# Информация о текущей странице #}
+   {{ page_obj.number }}
+
+   {# Информация о следующих страницах #}
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+
+{% endblock content %}
+</body>
+</html>

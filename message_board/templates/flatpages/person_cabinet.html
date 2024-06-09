@@ -1,0 +1,92 @@
+{% extends "flatpages/mainpost.html" %}
+<!DOCTYPE html>
+<html lang="en">
+{% block title %}
+{% endblock title %}
+
+<body><!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+
+<h1  align="center" style="color:Gray; font-family: Trebuchet MS; font-size: 25px">Личный кабинет пользователя: {{ user.username }}</h1>
+<h1  align="center" style="color:Gray; font-family: Trebuchet MS; font-size: 25px">Отклики на объявления пользователя: {{ user.username }}</h1>
+<button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'person_cabinet' %}">Отклики</a></button>
+<button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'my_post' %}">Мои объявления</a></button>
+<button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'post_create' %}">Создать объявление</a></button>
+<button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'category_name' %}">Подписаться на категорию</a></button>
+
+   <div style="border: 2px solid #ccc; border-radius: 10px; padding: 15px; margin-bottom: 20px; background-color: #f8f9fa;">
+       <h4>Выберите объявление:</h4>
+    <br>
+      <form action="" method="get">
+      {{ filterset.form }}
+    <br><br>
+      <input style="color:#292929; font-size: 12px;" type="submit" value="НАЙТИ">
+      </form>
+       <br>
+       <button> <a style="color:#292929; font-size: 12px;" href="{% url 'person_cabinet' %}">Сбросить фильтр</a> </button>
+       <br>
+   </div>
+
+<br>
+{% if person_cabinet %}
+    {% for comment in person_cabinet %}
+    {% if not comment.status %}
+    <h2>Отклик, ожидающий подтверждения:</h2>
+            <div style="border: 2px solid #ccc; border-radius: 10px; padding: 15px; margin-bottom: 20px; background-color: #f8f9fa;">
+                <p>{{ comment.comment_author|safe }} {{ comment.comment_created_at|date:"d E Y, H:i" }} </p>
+            <hr>
+                {{ comment.content|safe }}
+            <hr>
+                <button> <a style="color:#292929; font-size: 12px;" href="{% url 'comment_accept' comment.id  %}">Принять отклик</a> </button>
+                <button> <a style="color:#292929; font-size: 12px;" href="{% url 'comment_delete' comment.id  %}">Удалить отклик</a> </button>
+
+           </div>
+      {% endif %}
+  {% endfor %}
+
+        <h3>Принятые отклики:</h3>
+  {% for comment in person_cabinet %}
+    {% if comment.status %}
+        <div style="border: 2px solid #ccc; border-radius: 10px; padding: 25px; margin-bottom: 20px; background-color: #f8f9fa;">
+            <p>{{ comment.comment_author|safe }} {{ comment.comment_created_at|date:"d E Y, H:i" }} </p>
+            <hr>
+                 {{ comment.content|safe }}
+            <hr>
+                 <button> <a style="color:#292929; font-size: 12px;" href="{% url 'comment_delete' comment.id  %}">Удалить отклик</a> </button>
+        </div>
+    {% endif %}
+  {% endfor %}
+{% else %}
+
+       <h4>Откликов нет!</h4>
+{% endif %}
+
+
+{% if filterset.qs %}{% endif %}
+
+{# Добавляем пагинацию на страницу #}
+
+   {# Информация о предыдущих страницах #}
+   {% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {# Информация о текущей странице #}
+   {{ page_obj.number }}
+
+   {# Информация о следующих страницах #}
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+
+{% endblock content %}
+</body>
+</html>

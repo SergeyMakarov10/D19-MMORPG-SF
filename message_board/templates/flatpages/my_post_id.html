@@ -1,0 +1,72 @@
+{% extends "flatpages/mainpost.html" %}
+{% load static %}
+
+{% block title %}
+{% endblock title %}
+
+<body>
+{% block content %}
+
+<h1  align="center" style="color:Gray; font-family: Trebuchet MS; font-size: 25px">Личный кабинет пользователя: {{ user.username }}</h1>
+<h1  align="center" style="color:Gray; font-family: Trebuchet MS; font-size: 25px">Просмотр и редактирование объявления пользователя: {{ user.username }}</h1>
+<button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'person_cabinet' %}">Отклики</a></button>
+<button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'my_post' %}">Мои объявления</a></button>
+<button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'post_create' %}">Создать объявление</a></button>
+<button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'category_name' %}">Подписаться на категорию</a></button>
+   <h1>Объявление</h1>
+   <!-- Выводим объявления, только если они есть с помощью тега if -->
+   {% if my_post_id %}
+       <table>
+           <tr>
+               <td>Название</td>
+               <td>Объявление</td>
+               <td>Дата создания</td>
+               <td>Цена</td>
+               <td>Автор</td>
+               <td>Категория</td>
+               <td>Комметарий</td>
+               <td>Автор комментария</td>
+               <td>Дата комментария</td>
+
+
+
+           </tr>
+
+
+           <tr>
+               <td>{{ my_post_id.title }}</td>
+               <td>{{ my_post_id.content|safe }}</td>
+               <td>{{ my_post_id.post_created_at }}</td>
+               <td>{{ my_post_id.price }}</td>
+               <td>{{ my_post_id.post_author }}</td>
+               <td>{{ my_post_id.categories }}</td>
+
+
+               <td>{% for c in my_post_id.PostComment.all %}
+                   {{ c.content }}
+                   {% endfor %}
+               </td>
+               <td>{% for c in my_post_id.PostComment.all %}
+                   {{ c.comment_author }}
+                   {% endfor %}
+               </td>
+               <td>{% for c in my_post_id.PostComment.all %}
+                   {{ c.comment_created_at }}
+                   {% endfor %}
+               </td>
+           </tr>
+
+
+       </table>
+   {% else %}
+       <!-- Если товаров нет, говорим, что товаров нет ;) -->
+       <h2>Сообщений нет!</h2>
+   {% endif %}
+
+   <button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'post_update' my_post_id.id %}">Редактировать объявление</a></button>
+   <button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'post_delete' my_post_id.id %}"> Удалить объявление </a> </button>
+   <button><a class="btn btn-primary" style="color:Gray; font-family: Trebuchet MS; font-size: 15px", href="{% url 'comment_create' %}"> Создать комментарий </a> </button>
+
+
+{% endblock content %}
+</body>

@@ -1,0 +1,87 @@
+<body><h1>Создать объявление</h1>
+
+<form action="" method="post">
+    <input type="hidden" name="csrfmiddlewaretoken" value="puDXjyh3OWPoGJM8gEhacEcqq4vF32r56YUpRQscSf6sgT1Yfonmtajqf0y5s7Cv">
+    <p>
+    <label for="id_title">Название:</label>
+    <input type="text" name="title" maxlength="255" required="" id="id_title">
+
+
+  </p>
+
+
+  <p>
+    <label for="id_content">Объявление:</label>
+    <textarea name="content" cols="40" rows="10" required="" id="id_content" style="width: 1416px; height: 313px;"></textarea>
+
+
+  </p>
+
+
+  <p>
+    <label for="id_author">Автор:</label>
+    <select name="author" required="" id="id_author">
+  <option value="" selected="">---------</option>
+
+  <option value="1">alexander</option>
+
+  <option value="2">Maria</option>
+
+</select>
+
+
+  </p>
+
+
+  <p>
+    <label for="id_type">Категория:</label>
+    <select name="type" required="" id="id_type">
+  <option value="" selected="">---------</option>
+
+  <option value="TANK">Танк</option>
+
+  <option value="HILL">Хилл</option>
+
+  <option value="DD">ДД</option>
+
+  <option value="MER">Торговец</option>
+
+  <option value="GILD">Гилдмастер</option>
+
+  <option value="KV">Квестгивер</option>
+
+  <option value="BS">Кузнец</option>
+
+  <option value="TAN">Кожевник</option>
+
+  <option value="ZE">Зельевар</option>
+
+  <option value="MI">Мастер заклинаний</option>
+
+</select>
+
+
+  </p>
+
+
+  <p>
+    <label for="id_price">Цена:</label>
+    <input type="number" name="price" step="any" required="" id="id_price">
+
+
+  </p>
+
+
+  <p>
+    <label for="id_image">Изображение:</label>
+    <input type="file" name="image" accept="image/*" id="id_image">
+
+
+
+
+  </p>
+    <input type="submit" value="Сохранить">
+</form>
+<button> <a href="/posts/"> Назад </a> </button>
+
+</body>

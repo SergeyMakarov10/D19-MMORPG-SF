@@ -1,0 +1,65 @@
+{% extends "flatpages/mainpost.html" %}
+
+
+
+{% block title %}
+{% endblock title %}
+
+<body>
+{% block content %}
+
+
+   <h1>Объявление</h1>
+   <!-- Выводим объявления, только если они есть с помощью тега if -->
+   {% if post_id %}
+       <table>
+           <tr>
+               <td>Название</td>
+               <td>Объявление</td>
+               <td>Дата создания</td>
+               <td>Цена</td>
+               <td>Автор</td>
+               <td>Категория</td>
+               <td>Комметарий</td>
+               <td>Автор комментария</td>
+               <td>Дата комментария</td>
+
+
+
+           </tr>
+
+
+           <tr>
+               <td>{{ post_id.title }}</td>
+               <td>{{ post_id.content|safe }}</td>
+               <td>{{ post_id.post_created_at }}</td>
+               <td>{{ post_id.price }}</td>
+               <td>{{ post_id.post_author }}</td>
+               <td>{{ post_id.categories }}</td>
+
+
+               <td>{% for c in post_id.PostComment.all %}
+                   {{ c.content }}
+                   {% endfor %}
+               </td>
+               <td>{% for c in post_id.PostComment.all %}
+                   {{ c.comment_author }}
+                   {% endfor %}
+               </td>
+               <td>{% for c in post_id.PostComment.all %}
+                   {{ c.comment_created_at }}
+                   {% endfor %}
+               </td>
+           </tr>
+
+
+       </table>
+   {% else %}
+       <!-- Если товаров нет, говорим, что товаров нет ;) -->
+       <h2>Сообщений нет!</h2>
+   {% endif %}
+
+
+
+{% endblock content %}
+</body>

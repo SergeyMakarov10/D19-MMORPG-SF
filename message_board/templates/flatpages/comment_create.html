@@ -1,0 +1,28 @@
+{% extends "flatpages/mainpost.html" %}
+
+{% block title %}
+{% endblock title %}
+
+<body>
+{% block content %}
+   <h1  align="center" style="color:Gray; font-family: Trebuchet MS; font-size: 25px">Создать комментарий</h1>
+   <style>
+   select {
+    width: 300px; /* Ширина списка в пикселах */
+   }
+   label {
+    /* Ширина списка в пикселах */
+   }
+  </style>
+
+
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="отправить" />
+</form>
+
+
+{% endblock content %}
+</body>

@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% block title %}
+
+{% endblock title %}
+<h1  align="center" style="color:Gray">Доска объявлений</h1>
+<body>
+<style>
+   a {
+    color:#f2f3f4; text-transform:uppercase; font-size: 19px; font-family: Trebuchet MS; text-decoration: none;
+      }
+</style>
+   <div style="border: 2px solid #ccc; border-radius: 10px; padding: 35px; margin-bottom: 10px; background-color: #323233;">
+        <a style="position:relative; bottom: -10px; right: -10px;" href="{% url 'post' %}"> Все объявления </a>
+        <a style="position:relative; bottom: -10px; right: -160px;" href="{% url 'post_create' %}"> Создать объявление </a>
+        <a style="position:relative; bottom: -10px; right: -320px;" href="{% url 'comment_create' %}"> Создать комментарий </a>
+        <a style="position:relative; bottom: -10px; right: -480px;" href="{% url 'person_cabinet' %}"> Личный кабинет </a>
+
+           <form action="{% url 'account_logout' %}" method="post" >
+           {% csrf_token %}
+           <a style="position:relative; bottom: 12px; right: -1354px;" href="{% url 'account_logout' %}" method="post" type="submit">Выйти </a>
+           </form>
+   </div>
+{% block content %}{% endblock content %}
+</body>
+</html>
+

@@ -1,0 +1,20 @@
+{% extends "flatpages/mainpost.html" %}
+
+{% block title %}
+{% endblock title %}
+
+<body><!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+   <h1  align="center" style="color:Gray; font-family: Trebuchet MS; font-size: 25px">Создать объявление</h1>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+
+    <input type="submit" value="создать" />
+</form>
+
+
+{% endblock content %}
+</body>
